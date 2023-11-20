@@ -22,5 +22,5 @@ public class MenuEntity {
     private String name;
     private Integer price;
     private ZonedDateTime createdAt;
-    private ZonedDateTime updateAt;
+    private ZonedDateTime updatedAt;
 }
