@@ -2,10 +2,17 @@ package com.app.review.api;
 
 import com.app.review.api.request.CreateAndEditRestaurantRequest;
 import com.app.review.api.request.CreateAndEditRestaurantRequestMenu;
+import com.app.review.model.RestaurantEntity;
+import com.app.review.service.RestaurantService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 public class RestaurantAPI {
+
+    private final RestaurantService restaurantService;
+
     @GetMapping("/restaurants")
     public String getRestaurants() {
         return "This is getRestaurants";
@@ -17,17 +24,17 @@ public class RestaurantAPI {
     }
 
     @PostMapping("/restaurant")
-    public String createRestaurant(@RequestBody CreateAndEditRestaurantRequest request) {
-        return "This is createRestaurant. name=" + request.getName() + " address=" + request.getAddress() + " menus=" + request.getMenus().get(0).getName() + request.getMenus().get(0).getPrice();
+    public void createRestaurant(@RequestBody CreateAndEditRestaurantRequest request) {
+        restaurantService.createRestaurant(request);
     }
 
     @PutMapping("/restaurant/{restaurantId}")
-    public String editRestaurant(@PathVariable Long restaurantId, @RequestBody CreateAndEditRestaurantRequest request) {
-        return "This is editRestaurant, " + restaurantId + " name=" + request.getName() + " address=" + request.getAddress() + " menus=" + request.getMenus().get(0).getName() + request.getMenus().get(0).getPrice();
+    public void editRestaurant(@PathVariable Long restaurantId, @RequestBody CreateAndEditRestaurantRequest request) {
+       restaurantService.editRestaurant(restaurantId, request);
     }
 
     @DeleteMapping("/restaurant/{restaurantId}")
-    public String deleteRestaurant(@PathVariable Long restaurantId) {
-        return "This is deleteRestaurant, " + restaurantId;
+    public void deleteRestaurant(@PathVariable Long restaurantId) {
+        restaurantService.deleteRestaurant(restaurantId);
     }
 }
